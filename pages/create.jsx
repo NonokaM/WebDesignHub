@@ -1,23 +1,11 @@
-import styles from '../styles/create.module.css'
-
-// export default function Create() {
-//     return(
-//         <div className={styles.container}>
-//             <input type="text" placeholder="Enter URL"/>
-//             <button>button</button>
-//         </div>
-//     )
-// }
-
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { storage } from '../firebase';
-import screenshotmachine from 'screenshotmachine';
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from '../lib/firebase';
+import { ref, getDownloadURL, getStorage, uploadBytes } from "firebase/storage";
 import { v4 as uuidv4 } from 'uuid';
+import axios from "axios";
 
-
-export default function CreatePost({ isAuth }) {
+export default function Create({ isAuth }) {
     const [loading, setLoading] = useState(false);
     const [isUploaded, setUploaded] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
@@ -25,61 +13,34 @@ export default function CreatePost({ isAuth }) {
 
     const router = useRouter();
 
-    useEffect(() => {
-        if (!isAuth) {
-            router.push("/login");
+    async function Screenshot(url) {
+        try {
+            const screenshotResponse = await axios.get(`/api/screenshot?url=${url}`, { responseType: 'arraybuffer' });
+            const screenshotBuffer = new Uint8Array(screenshotResponse.data);
+
+            const storage = getStorage();
+            const storageRef = ref(storage, 'screenshots/screenshot.png'); // Change the path and file name as needed
+
+            await uploadBytes(storageRef, screenshotBuffer);
+
+            console.log('Screenshot uploaded');
+            } catch (err) {
+            console.error(err);
         }
-    }, [isAuth, router])
-
-
-    const generateScreenshot = async () => {
-        const customerKey = '46a455';
-        const secretPhrase = '';
-        const options = {
-            url: url,
-            dimension: '1366xfull',
-            device: 'desktop',
-            format: 'png',
-            cacheLimit: '0',
-            delay: '200',
-            zoom: '100'
-        }
-
-        const apiUrl = screenshotmachine.generateScreenshotApiUrl(customerKey, secretPhrase, options);
-
-        const response = await fetch(apiUrl);
-        const blob = await response.blob();
-
-        saveScreenshotToFirestore(blob);
     }
 
-    const saveScreenshotToFirestore = (blob) => {
-        const storageRef = ref(storage, `screenshots/${uuidv4()}.png`);
-
-        const uploadImage = uploadBytesResumable(storageRef, blob);
-
-        uploadImage.on(
-        'state_changed',
-        (snapshot) => {
-            setLoading(true);
-        },
-        (error) => {
-            console.error(error);
-            setLoading(false);
-        },
-        () => {
-            setLoading(false);
-            setUploaded(true);
-            getDownloadURL(uploadImage.snapshot.ref).then((downloadURL) => {
-            console.log('File available at', downloadURL);
-            setImageUrl(downloadURL);
-            });
-        }
-        );
-    }
+    // useEffect(() => {
+    //     if (!isAuth) {
+    //         router.push("/login");
+    //     }
+    // }, [isAuth, router])
 
     const handleUrlChange = (event) => {
-    setUrl(event.target.value);
+        setUrl(event.target.value);
+    }
+
+    const generateScreenshot = () => {
+        Screenshot(url);
     }
 
     return (
