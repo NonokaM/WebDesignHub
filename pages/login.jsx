@@ -20,9 +20,10 @@ export default function Login({ setIsAuth }) {
     };
 
     return (
-        <div>
-            <p>ログインして始める</p>
-            <button onClick={loginInWithGoogle}>Googleでログイン</button>
+        <div className={styles.loginContainer}>
+            <h1>Googleアカウントで新規登録 / ログイン</h1>
+            <h2>ログインして投稿・コメントしよう！</h2>
+            <button onClick={loginInWithGoogle} className={styles.loginBtn}>Googleでログイン</button>
         </div>
     )
 }
