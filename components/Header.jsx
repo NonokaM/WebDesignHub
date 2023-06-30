@@ -23,7 +23,9 @@ export default function Header({ isAuth, setIsAuth }) {
 
     return (
         <nav className={styles.navContainer}>
-            <Link href="/">Home</Link>
+            <Link href="/">
+                <img src="/image.png" alt="" className={styles.logoImg}/>
+            </Link>
             <Link href="/search">search</Link>
             {!isAuth ? (
             <Link href="/login">Login</Link>
