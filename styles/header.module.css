@@ -1,3 +1,26 @@
+.navContainer {
+    height: 52px;
+    width: 100%;
+    /* margin-top: 52px; */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    top: 0;
+    z-index: 999;
+
+    background-color: white;
+    box-shadow: 0px 3px 7px 0px rgba(51, 51, 51, 0.2);
+
+    gap: 20px;
+}
+
+.navContainer Link{
+
+}
+
 .dropdown {
     position: relative;
     display: inline-block;
@@ -26,3 +49,28 @@
     cursor: pointer;
     outline: inherit;
 }
+
+/*
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 45px;
+
+    height: 50px;
+    background-color: rgb(58, 68, 74);
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s;
+}
+
+nav a:hover {
+    color: rgb(145, 229, 255);
+}
+
+nav a svg {
+    margin-right: 5px;
+} */

@@ -22,7 +22,7 @@ export default function Header({ isAuth, setIsAuth }) {
     }
 
     return (
-        <nav>
+        <nav className={styles.navContainer}>
             <Link href="/">Home</Link>
             <Link href="/search">search</Link>
             {!isAuth ? (
