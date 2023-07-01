@@ -22,25 +22,34 @@ export default function Header({ isAuth, setIsAuth }) {
     }
 
     return (
-        <nav className={styles.navContainer}>
+        <nav className={styles.headerContainer}>
             <Link href="/">
-                <img src="/image.png" alt="" className={styles.logoImg}/>
+                <img src="/logo.png" alt="" className={styles.logoImg}/>
             </Link>
-            <Link href="/search">search</Link>
-            {!isAuth ? (
-            <Link href="/login">Login</Link>
-            ) : (
-            <>
-                <Link href="/create">create</Link>
-                <div className={styles.dropdown}>
-                    <Link className={styles.dropbtn} href="/user">user</Link>
-                    <div className={styles.dropdownContent}>
-                        <Link href="/user">user</Link>
-                        <button onClick={handleLogout}>Logout</button>
+
+            <div className={styles.navContainer}>
+                <Link href="/search">
+                    <img src="/searchIcon.png" alt="" className={styles.searchIcon}/>
+                </Link>
+                {!isAuth ? (
+                <Link href="/login">Login</Link>
+                ) : (
+                <>
+                    <Link href="/create">
+                        <img src="/createPostIcon.png" alt="" className={styles.createPostIcon}/>
+                    </Link>
+                    <div className={styles.dropdown}>
+                        <Link className={styles.dropbtn} href="/user">
+                            <img src="/userIcon.png" alt="" className={styles.userIcon}/>
+                        </Link>
+                        <div className={styles.dropdownContent}>
+                            <Link href="/user"></Link>
+                            <button onClick={handleLogout}>ログアウト</button>
+                        </div>
                     </div>
-                </div>
-            </>
-        )}
+                </>
+                )}
+            </div>
         </nav>
     )
 }
