@@ -17,7 +17,7 @@ export default async (req, res) => {
     device : 'desktop',
     format: 'png',
     cacheLimit: '0',
-    delay: '200',
+    delay: '5000',
     zoom: '100'
   }
 
