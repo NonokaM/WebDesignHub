@@ -2,13 +2,15 @@ import Link from "next/link"
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import React, { useEffect, useState } from 'react';
 import styles from '../styles/post.module.css'
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, addDoc, deleteDoc } from "firebase/firestore";
 import { db } from '../lib/firebase';
 import { Comment, CommentForm } from '../components/Comment';
+
 
 export default function Post({ url, screenshotName, comment, userId, postId }) {
     const [imageURL, setImageURL] = useState(null);
     const [comments, setComments] = useState([]);
+    const [liked, setLiked] = useState(false);
     const storage = getStorage();
     let storageRef = ref(storage, `screenshots/${screenshotName}.png`);
 
@@ -34,17 +36,50 @@ export default function Post({ url, screenshotName, comment, userId, postId }) {
             setComments(commentsSnapshot.docs.map(doc => doc.data()));
         }
 
+        const fetchLikes = async () => {
+            const q = query(
+                collection(db, "likes"),
+                where("postId", "==", postId),
+                where("userId", "==", userId)
+            );
+            const querySnapshot = await getDocs(q);
+            setLiked(!querySnapshot.empty);
+        };
+
         fetchComments();
-    }, [screenshotName, storageRef, postId]);
+        fetchLikes();
+    }, [screenshotName, storageRef, postId, userId]);
+
+    const toggleLike = async () => {
+        if (liked) {
+            const q = query(
+                collection(db, "likes"),
+                where("postId", "==", postId),
+                where("userId", "==", userId)
+            );
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach(async (doc) => {
+                await deleteDoc(doc.ref);
+            });
+        } else {
+            await addDoc(collection(db, "likes"), {
+                postId,
+                userId
+            });
+        }
+        setLiked(!liked);
+    };
+
 
     return (
         <div className={styles.postContainer}>
             <div className="postHeader">
                 {/* <h1>{userId}</h1> */}
                 <Link href={url} target="_blank">
-                    {imageURL && <img src={imageURL} alt="Screenshot" />}
+                    {imageURL && <img src={imageURL} alt="Screenshot" className={styles.urlImg}/>}
                     <h3>{url}</h3>
                 </Link>
+                <button onClick={toggleLike}>{liked ? 'いいね済' : 'いいね'}</button>
             </div>
             <div className="commentContainer">
                 <h2>{comment}</h2>
