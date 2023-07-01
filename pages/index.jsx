@@ -1,6 +1,6 @@
 // import Head from 'next/head'
 import { Inter } from 'next/font/google'
-import Post from '@/components/Post'
+import Post from '../components/Post'
 import React, { useEffect, useState } from 'react'
 import { collection, doc, getDocs } from "firebase/firestore"
 import { auth, db } from '../lib/firebase'
@@ -21,8 +21,6 @@ export default function Home() {
 
   return (
     <>
-      <p className={styles.home}>home</p>
-
       {postList.map((post) => {
         return post.screenshotName ? (
           <Post
