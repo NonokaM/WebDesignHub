@@ -8,6 +8,7 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
   return (
     <>
+    <p className={styles.home}>home</p>
     <Post title='test1' URL='testURL' comment='comme' />
     <Post title='test2' URL='testURL2' comment='comme2' />
     </>
