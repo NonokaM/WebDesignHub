@@ -1,8 +1,7 @@
-export default function Post({ title, URL, comment }) {
+export default function Post({ url, comment, screenshotName }) {
     return (
         <>
-        <h1>{ title }</h1>
-        <p>{ URL }</p>
+        <h1>{ url }</h1>
         <p>{ comment }</p>
         </>
     )
