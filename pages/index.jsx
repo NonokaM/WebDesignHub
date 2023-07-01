@@ -25,6 +25,7 @@ export default function Home() {
         return post.screenshotName ? (
           <Post
             key={post.id}
+            postId={post.id}
             url={post.url}
             screenshotName={post.screenshotName}
             comment={post.comment}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { v4 as uuidv4 } from 'uuid';
 import axios from "axios";
@@ -70,7 +70,7 @@ export default function Create({ isAuth }) {
                 url: url,
                 screenshotName: screenshot.screenshotName,
                 comment: comment,
-                createdAt: Timestamp.now(),
+                createdAt: serverTimestamp(),
                 userId: user.uid,
                 userName: user.displayName
             });
@@ -85,6 +85,7 @@ export default function Create({ isAuth }) {
 
         setLoading(false);
     }
+
 
     return (
         <div className={styles.container}>
