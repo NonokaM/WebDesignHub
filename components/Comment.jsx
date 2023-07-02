@@ -3,7 +3,6 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { db } from '../lib/firebase';
 
-
 export function Comment({ comment }) {
     return (
         <div>
@@ -13,8 +12,7 @@ export function Comment({ comment }) {
     );
 }
 
-
-export function CommentForm({ postId }) {
+export function CommentForm({ postId, comments, setComments }) {
     const [text, setText] = useState('');
     const auth = getAuth();
     const currentUser = auth.currentUser;
@@ -37,6 +35,14 @@ export function CommentForm({ postId }) {
                 userId: currentUser.uid,
                 postId: postId
             });
+
+            const newComment = {
+                text: text,
+                createdAt: new Date(),
+                userId: currentUser.uid,
+                postId: postId
+            };
+            setComments([...comments, newComment]);
 
             setText('');
         } catch (err) {

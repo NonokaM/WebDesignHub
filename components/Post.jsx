@@ -1,18 +1,18 @@
-import Link from "next/link"
+import Link from "next/link";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import React, { useEffect, useState } from 'react';
-import styles from '../styles/post.module.css'
+import styles from '../styles/post.module.css';
 import { collection, query, where, getDocs, addDoc, deleteDoc } from "firebase/firestore";
 import { db } from '../lib/firebase';
 import { Comment, CommentForm } from '../components/Comment';
 
-
-export default function Post({ url, screenshotName, comment, userId, postId }) {
+export default function Post({ url, screenshotName, comment, userId, postId, comments }) {
     const [imageURL, setImageURL] = useState(null);
-    const [comments, setComments] = useState([]);
     const [liked, setLiked] = useState(false);
+    const [commentsState, setCommentsState] = useState(comments || []);
     const storage = getStorage();
     let storageRef = ref(storage, `screenshots/${screenshotName}.png`);
+
 
     useEffect(() => {
         getDownloadURL(storageRef)
@@ -20,21 +20,15 @@ export default function Post({ url, screenshotName, comment, userId, postId }) {
                 setImageURL(url);
             })
             .catch((error) => {
-            switch (error.code) {
-                case 'storage/object-not-found':
-                    break;
-                case 'storage/unauthorized':
-                    break;
-                case 'storage/canceled':
-                    break;
-            }
-        });
-
-        const fetchComments = async () => {
-            const q = query(collection(db, "comments"), where("postId", "==", postId));
-            const commentsSnapshot = await getDocs(q);
-            setComments(commentsSnapshot.docs.map(doc => doc.data()));
-        }
+                switch (error.code) {
+                    case 'storage/object-not-found':
+                        break;
+                    case 'storage/unauthorized':
+                        break;
+                    case 'storage/canceled':
+                        break;
+                }
+            });
 
         const fetchLikes = async () => {
             const q = query(
@@ -46,9 +40,8 @@ export default function Post({ url, screenshotName, comment, userId, postId }) {
             setLiked(!querySnapshot.empty);
         };
 
-        fetchComments();
         fetchLikes();
-    }, [screenshotName, storageRef, postId, userId]);
+    }, []);
 
     const toggleLike = async () => {
         if (liked) {
@@ -70,11 +63,9 @@ export default function Post({ url, screenshotName, comment, userId, postId }) {
         setLiked(!liked);
     };
 
-
     return (
         <div className={styles.postContainer}>
             <div className="postHeader">
-                {/* <h1>{userId}</h1> */}
                 <Link href={url} target="_blank">
                     {imageURL && <img src={imageURL} alt="Screenshot" className={styles.urlImg}/>}
                     <h3>{url}</h3>
@@ -83,10 +74,10 @@ export default function Post({ url, screenshotName, comment, userId, postId }) {
             </div>
             <div className="commentContainer">
                 <h2>{comment}</h2>
-                {comments.map((comment, index) => (
+                {commentsState.map((comment, index) => (
                     <Comment key={index} comment={comment} />
                 ))}
-                <CommentForm postId={postId} />
+                <CommentForm postId={postId} comments={commentsState} setComments={setCommentsState} />
             </div>
         </div>
     );

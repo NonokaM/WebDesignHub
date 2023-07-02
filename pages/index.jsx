@@ -1,22 +1,26 @@
-// import Head from 'next/head'
-import { Inter } from 'next/font/google'
-import Post from '../components/Post'
-import React, { useEffect, useState } from 'react'
-import { collection, doc, getDocs } from "firebase/firestore"
-import { auth, db } from '../lib/firebase'
-import styles from '../styles/gallery.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import { collection, doc, getDocs, query, where } from "firebase/firestore";
+import { auth, db } from '../lib/firebase';
+import styles from '../styles/gallery.module.css';
+import Post from '../components/Post';
+import React, { useEffect, useState } from 'react';
 
 export default function Home() {
   const [postList, setPostList] = useState([]);
 
   useEffect(() => {
-    const getPosts = async () => {
+    const getPostsAndComments = async () => {
       const data = await getDocs(collection(db, "posts"));
-      setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id})));
-    }
-    getPosts();
+      const posts = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+
+      for (let post of posts) {
+        const commentsSnapshot = await getDocs(query(collection(db, "comments"), where("postId", "==", post.id)));
+        post.comments = commentsSnapshot.docs.map(doc => doc.data());
+      }
+
+      setPostList(posts);
+    };
+
+    getPostsAndComments();
   }, []);
 
   return (
@@ -30,9 +34,10 @@ export default function Home() {
             screenshotName={post.screenshotName}
             comment={post.comment}
             userId={post.userId}
+            comments={post.comments}
           />
         ) : null;
       })}
     </>
-  )
+  );
 }
