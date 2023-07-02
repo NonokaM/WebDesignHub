@@ -28,11 +28,11 @@ export default function Header({ isAuth, setIsAuth }) {
             </Link>
 
             <div className={styles.navContainer}>
-                <Link href="/search">
+                {/* <Link href="/search">
                     <img src="/searchIcon.png" alt="" className={styles.searchIcon}/>
-                </Link>
+                </Link> */}
                 {!isAuth ? (
-                <Link href="/login">Login</Link>
+                <Link href="/login" className={styles.loginBtn}>ログイン</Link>
                 ) : (
                 <>
                     <Link href="/create">

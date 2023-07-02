@@ -27,6 +27,30 @@
     gap: 15px;
 }
 
+.loginBtn {
+    width: 65px;
+    height: 30px;
+    border-radius: 30px;
+    border: 2.5px solid rgb(43, 43, 43);
+    font-size: 12px;
+    font-weight: 880;
+    background-color: white;
+    transition: all 0.4s;
+
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -5px;
+    margin-right: 20px;
+}
+
+.loginBtn:hover {
+    color: white;
+    background-color: rgb(43, 43, 43);
+}
+
+
 .logoContainer {
     width: 20%;
 }
