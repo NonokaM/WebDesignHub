@@ -89,10 +89,10 @@ export default function Create({ isAuth }) {
 
     return (
         <div className={styles.container}>
-            <h2>良いと思ったWebデザインをコメント付きで共有しよう！</h2>
-            <input type="text" value={url} onChange={handleUrlChange} placeholder="Enter URL"/>
-            <input type="text" value={comment} onChange={handleCommentChange} placeholder="コメントを入力" />
-            <button onClick={handleSubmit}>
+            <h2>良いと思ったWebデザインをコメント付きで共有しよう！ </h2>
+            <input className={styles.huki} type="text" value={url} onChange={handleUrlChange} placeholder="https://example.com/"/>
+            <input className={styles.huki} type="text" value={comment} onChange={handleCommentChange} placeholder="コメントを入力" />
+            <button onClick={handleSubmit} className={styles.btn}>
                 共有する
             </button>
 
