@@ -39,11 +39,12 @@ export default function Header({ isAuth, setIsAuth }) {
                         <img src="/createPostIcon.png" alt="" className={styles.createPostIcon}/>
                     </Link>
                     <div className={styles.dropdown}>
-                        <Link className={styles.dropbtn} href="/user">
+                        <div className={styles.dropbtn} href="/user">
                             <img src="/userIcon.png" alt="" className={styles.userIcon}/>
-                        </Link>
+                        </div>
                         <div className={styles.dropdownContent}>
                             <Link href="/user"></Link>
+                            {/* <Link href="/likes">いいねした投稿</Link> */}
                             <button onClick={handleLogout}>ログアウト</button>
                         </div>
                     </div>
