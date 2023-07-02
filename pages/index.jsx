@@ -24,7 +24,7 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <div className={styles.mainContentContainer}>
       {postList.map((post) => {
         return post.screenshotName ? (
           <Post
@@ -38,6 +38,6 @@ export default function Home() {
           />
         ) : null;
       })}
-    </>
+    </div>
   );
 }

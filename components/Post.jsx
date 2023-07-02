@@ -65,15 +65,15 @@ export default function Post({ url, screenshotName, comment, userId, postId, com
 
     return (
         <div className={styles.postContainer}>
-            <div className="postHeader">
+            <div className={styles.leftContainer}>
                 <Link href={url} target="_blank">
                     {imageURL && <img src={imageURL} alt="Screenshot" className={styles.urlImg}/>}
                     <h3>{url}</h3>
                 </Link>
                 <button onClick={toggleLike}>{liked ? 'いいね済' : 'いいね'}</button>
             </div>
-            <div className="commentContainer">
-                <h2>{comment}</h2>
+            <div className={styles.righitContainer}>
+                <h3 className={styles.huki}>{comment}</h3>
                 {commentsState.map((comment, index) => (
                     <Comment key={index} comment={comment} />
                 ))}

@@ -1,0 +1,8 @@
+.mainContentContainer {
+  width: 70%;
+  margin: auto; /* This will center the container */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 150px;
+  margin-top: 60px;
+}

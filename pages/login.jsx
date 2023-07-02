@@ -13,6 +13,7 @@ export default function Login({ setIsAuth }) {
             await signInWithPopup(auth, provider)
             localStorage.setItem("isAuth", true);
             setIsAuth(true);
+            console.log("Login successful, redirecting...");
             router.push("/");
         } catch (error) {
             console.error(error);

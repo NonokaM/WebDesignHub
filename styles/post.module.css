@@ -1,8 +1,81 @@
 .postContainer {
+    /* margin: 60px; */
     display: flex;
-    margin: 60px;
+    width: 100;
+    margin-top: 100px;
+    /* background-color: red; */
+}
+
+.leftContainer {
+    width: 60%;
+    /* background-color: blueviolet; */
 }
 
 .urlImg{
-    height: 500px;
+    flex: 30%;
+    width: 550px;
+    transition: transform 0.7s ease-in-out;
+}
+
+.urlImg:hover{
+    transform: scale(1.03);
+}
+
+.rightContainer {
+    width: 40%;
+}
+
+.huki {
+    background-color: rgb(232, 232, 232);
+    border-radius: 100px;
+    padding: 10px 20px;
+    border-bottom-left-radius: 0;
+    margin: 10px;
+    width: 100%;
+    overflow-wrap: normal;
+    margin-left: 50px;
+}
+
+.hukiInput {
+    background-color: rgba(255, 0, 0, 0);
+    border: 2.5px solid rgb(165, 165, 165);
+    border-radius: 100px;
+    padding: 10px 20px;
+    border-bottom-left-radius: 0;
+    width: 100%;
+    overflow-wrap: normal;
+    margin-left: 50px;
+}
+
+.plusbtn {
+    /* width: 10%; */
+    height: 30px;
+    margin-left: -40px;
+    padding: 10px;
+    border-radius: 30px;
+    border: 2.5px solid rgb(165, 165, 165);
+    font-size: 12px;
+    font-weight: 880;
+    background-color: rgba(255, 255, 255, 0);
+    transition: all 0.2s;
+
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-top: -5px; */
+    /* margin-right: 20px; */
+}
+.plusbtn:hover {
+    color: white;
+    background-color: rgb(43, 43, 43);
+}
+
+.inputContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 45px;
+
+    height: 50px;
 }
