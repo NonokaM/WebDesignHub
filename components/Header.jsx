@@ -13,9 +13,6 @@ export default function Header({ isAuth, setIsAuth }) {
 
     const handleLogout = () => {
         signOut(auth).then(() => {
-            if (typeof window !== 'undefined') {
-                localStorage.clear();
-            }
             setIsAuth(false);
             router.push("/");
         });
