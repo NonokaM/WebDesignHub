@@ -1,30 +1,57 @@
-import { signInWithPopup } from 'firebase/auth'
-import { auth, provider } from '../lib/firebase'
-import { useRouter } from 'next/router'
-import React from 'react'
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useState } from 'react';
+import Link from 'next/link';
+import { auth } from '../lib/firebase';
 
-import styles from '../styles/login.module.css'
 
-export default function Login({ setIsAuth }) {
-    const router = useRouter();
+export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    const loginInWithGoogle = async () => {
-        try {
-            await signInWithPopup(auth, provider)
-            localStorage.setItem("isAuth", true);
-            setIsAuth(true);
-            console.log("Login successful, redirecting...");
-            router.push("/");
-        } catch (error) {
-            console.error(error);
-        }
-    };
+  const doLogin = (e) => {
+    e.preventDefault();
 
-    return (
-        <div className={styles.loginContainer}>
-            <h1>Googleアカウントで新規登録 / ログイン</h1>
-            <h2>ログインして投稿・コメントしよう！</h2>
-            <button onClick={loginInWithGoogle} className={styles.loginBtn}>Googleでログイン</button>
-        </div>
-    )
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log( 'ログインOK!' );
+        console.log( user );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  return (
+    <div>
+      <h1>ログイン</h1>
+      <div style={{ paddingBottom: "1rem" }}>
+        <form onSubmit={doLogin}>
+            <label>
+            メールアドレス：
+            </label>
+            <input
+            type="email"
+            name="email"
+            style={{ height: 50, fontSize: "1.2rem" }}
+            onChange={(e) => setEmail(e.target.value)}
+            />
+            <label>
+            パスワード：
+            </label>
+            <input
+            type="password"
+            name="password"
+            style={{ height: 50, fontSize: "1.2rem" }}
+            onChange={(e) => setPassword(e.target.value)}
+            />
+            <button
+                style={{ width: 220 }}
+                color="primary"
+                type="submit"
+            > ログイン </button>
+        </form>
+      </div>
+    </div>
+  )
 }
