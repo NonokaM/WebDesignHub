@@ -1,0 +1,29 @@
+.textInput {
+    background-color: rgb(232, 232, 232);
+    border-radius: 100px;
+    padding: 10px 20px;
+    border-bottom-left-radius: 0;
+    margin: 8px;
+    width: 35%;
+}
+
+.normalBtn {
+    width: 190px;
+    height: 60px;
+
+    border-radius: 59px;
+    border: 3px solid rgb(43, 43, 43);
+
+    font-size: 15px;
+    font-weight: bold;
+
+    background-color: white;
+    transition: all 0.4s;
+
+    margin-top: 30px;
+}
+
+.normalBtn:hover {
+    color: white;
+    background-color: rgb(43, 43, 43);
+}
