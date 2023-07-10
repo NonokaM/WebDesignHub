@@ -27,27 +27,27 @@ export default function Login() {
 
   return (
     <div className={styles.loginContainer}>
-        <h1>ログイン</h1>
-        <form onSubmit={doLogin} className={styles.formContainer}>
-            <input
-            type="email"
-            name="email"
-            className={commonStyles.textInput}
-            placeholder="メールアドレス"
-            onChange={(e) => setEmail(e.target.value)}
-            /><br />
-            <input
-            type="password"
-            name="password"
-            className={commonStyles.textInput}
-            placeholder="パスワード"
-            onChange={(e) => setPassword(e.target.value)}
-            /><br />
-            <button className={commonStyles.normalBtn}> ログイン </button>
-        </form>
-        <Link href="/register" className={styles.registerLink}>
-          新規登録はこちら
-        </Link>
+      <h1>ログイン</h1>
+      <form onSubmit={doLogin} className={styles.formContainer}>
+          <input
+          type="email"
+          name="email"
+          className={commonStyles.textInput}
+          placeholder="メールアドレス"
+          onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+          type="password"
+          name="password"
+          className={commonStyles.textInput}
+          placeholder="パスワード"
+          onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className={commonStyles.normalBtn}> ログイン </button>
+      </form>
+      <Link href="/register" className={styles.registerLink}>
+        新規登録はこちら
+      </Link>
     </div>
   )
 }

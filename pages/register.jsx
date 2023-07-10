@@ -1,7 +1,8 @@
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { useEffect, useState } from 'react';
-
 import { auth } from '../lib/firebase';
+import commonStyles from '../styles/common.module.css'
+import styles from '../styles/register.module.css'
 
 export default function Register() {
   const [email, setEmail] = useState('');
@@ -30,36 +31,33 @@ export default function Register() {
 
 
   return (
-    <div>
+    <div className={styles.registerContainer}>
       <h1>新規登録</h1>
-      <div>
-        <form>
-            <label>
-                メールアドレス：
-                <input
-                  type="email"
-                  name="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-            </label>
-            <label>
-                パスワード：
-                <input
-                  type="password"
-                  name="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-            </label>
-            <button
-                onClick={(e)=>{
-                  e.preventDefault();
-                  doRegister();
-                }}
-              >
-              登録
-            </button>
+        <form className={styles.formContainer}>
+          <input
+            type="email"
+            name="email"
+            className={commonStyles.textInput}
+            placeholder="メールアドレス"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            name="password"
+            className={commonStyles.textInput}
+            placeholder="パスワード"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+              className={commonStyles.normalBtn}
+              onClick={(e)=>{
+                e.preventDefault();
+                doRegister();
+              }}
+            >
+            登録
+          </button>
         </form>
-      </div>
     </div>
   )
 }
