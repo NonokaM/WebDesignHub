@@ -19,3 +19,14 @@
 
     width: 100%;
 }
+
+.registerLink {
+    color: gray;
+    text-decoration: underline;
+    margin-top: 20px;
+    transition: all 0.4s;
+}
+
+.registerLink:hover {
+    color: rgb(43, 43, 43);
+}

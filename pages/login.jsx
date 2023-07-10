@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { auth } from '../lib/firebase';
 import commonStyles from '../styles/common.module.css';
 import styles from '../styles/login.module.css';
+import Link from "next/link"
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -28,26 +29,25 @@ export default function Login() {
     <div className={styles.loginContainer}>
         <h1>ログイン</h1>
         <form onSubmit={doLogin} className={styles.formContainer}>
-            <label>
-            メールアドレス：
-            </label>
             <input
             type="email"
             name="email"
             className={commonStyles.textInput}
+            placeholder="メールアドレス"
             onChange={(e) => setEmail(e.target.value)}
             /><br />
-            <label>
-            パスワード：
-            </label>
             <input
             type="password"
             name="password"
             className={commonStyles.textInput}
+            placeholder="パスワード"
             onChange={(e) => setPassword(e.target.value)}
             /><br />
             <button className={commonStyles.normalBtn}> ログイン </button>
         </form>
+        <Link href="/register" className={styles.registerLink}>
+          新規登録はこちら
+        </Link>
     </div>
   )
 }
