@@ -6,28 +6,45 @@ import commonStyles from '../styles/common.module.css';
 import styles from '../styles/login.module.css';
 import Link from "next/link"
 
+
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
 
   const doLogin = (e) => {
     e.preventDefault();
 
+    if (!email || !password) {
+      setErrorMessage('未入力の項目があります');
+      return;
+    }
+
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        // console.log( user );
         router.push('/');
       })
       .catch((error) => {
-        console.log(error);
+        switch (error.code) {
+          case 'auth/invalid-email':
+          case 'auth/user-disabled':
+          case 'auth/user-not-found':
+          case 'auth/wrong-password':
+            setErrorMessage('パスワードもしくはメールアドレスが間違っています。');
+            break;
+          default:
+            setErrorMessage('エラーが発生しました。もう一度お試しください。');
+            break;
+        }
       });
   }
 
   return (
     <div className={styles.loginContainer}>
       <h1>ログイン</h1>
+      {errorMessage && <p className={styles.errorMsg}>{errorMessage}</p>}
       <form onSubmit={doLogin} className={styles.formContainer}>
           <input
           type="email"
