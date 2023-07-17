@@ -44,7 +44,7 @@ export default function Login() {
   return (
     <div className={styles.loginContainer}>
       <h1>ログイン</h1>
-      {errorMessage && <p className={styles.errorMsg}>{errorMessage}</p>}
+      {errorMessage && <p className={commonStyles.errorMsg}>{errorMessage}</p>}
       <form onSubmit={doLogin} className={styles.formContainer}>
           <input
           type="email"

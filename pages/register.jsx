@@ -4,6 +4,7 @@ import { auth } from '../lib/firebase';
 import commonStyles from '../styles/common.module.css'
 import styles from '../styles/register.module.css'
 
+
 export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -41,10 +42,11 @@ export default function Register() {
     });
   }
 
+
   return (
     <div className={styles.registerContainer}>
       <h1>新規登録</h1>
-      {errorMessage && <p className={styles.errorMsg}>{errorMessage}</p>}
+      {errorMessage && <p className={commonStyles.errorMsg}>{errorMessage}</p>}
         <form className={styles.formContainer}>
           <input
             type="email"
