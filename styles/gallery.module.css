@@ -1,4 +1,16 @@
-.loadingScreen {
+.floatingImage {
+  animation: floating 1.9s ease-in-out infinite;
+  max-width: 150px;
+}
+
+@keyframes floating {
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -20px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+.loadingScreen,
+.loadingScreenFadeOut {
   position: fixed;
   top: 0;
   left: 0;
@@ -8,23 +20,18 @@
   justify-content: center;
   align-items: center;
   background-color: rgb(255, 255, 255);
+  transition: opacity 1s ease-in-out;
+  z-index: 3;
 }
 
-.floatingImage {
-  animation: floating 1.9s ease-in-out infinite;
-  max-width: 150px;  /* 画像の大きさを調整 */
+.loadingScreenFadeOut {
+  opacity: 0;
+  z-index: 4;
 }
-
-@keyframes floating {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(20px); }
-  100% { transform: translateY(0px); }
-}
-
 
 .mainContentContainer {
   width: 70%;
-  margin: auto; /* This will center the container */
+  margin: auto;
   display: flex;
   flex-direction: column;
   margin-bottom: 150px;
