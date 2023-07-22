@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 
 export default function Home() {
   const [postList, setPostList] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getPostsAndComments = async () => {
@@ -18,10 +19,19 @@ export default function Home() {
       }
 
       setPostList(posts);
+      setLoading(false);
     };
 
     getPostsAndComments();
   }, []);
+
+  if (loading) {
+    return  (
+      <div className={styles.loadingScreen}>
+        <img src="/logo-character.png" className={styles.floatingImage} alt="loading" />
+      </div>
+    )
+  }
 
   return (
     <div className={styles.mainContentContainer}>

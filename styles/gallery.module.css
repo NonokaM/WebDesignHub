@@ -1,3 +1,27 @@
+.loadingScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+}
+
+.floatingImage {
+  animation: floating 1.9s ease-in-out infinite;
+  max-width: 150px;  /* 画像の大きさを調整 */
+}
+
+@keyframes floating {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(20px); }
+  100% { transform: translateY(0px); }
+}
+
+
 .mainContentContainer {
   width: 70%;
   margin: auto; /* This will center the container */
