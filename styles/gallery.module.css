@@ -9,8 +9,7 @@
   100% { transform: translate3d(0, 0, 0); }
 }
 
-.loadingScreen,
-.loadingScreenFadeOut {
+.loadingScreen {
   position: fixed;
   top: 0;
   left: 0;
@@ -20,13 +19,13 @@
   justify-content: center;
   align-items: center;
   background-color: rgb(255, 255, 255);
-  transition: opacity 1s ease-in-out;
   z-index: 3;
+  transition: opacity 1s ease-in-out;
+  opacity: 1;
 }
 
-.loadingScreenFadeOut {
+.hidden {
   opacity: 0;
-  z-index: 4;
 }
 
 .mainContentContainer {

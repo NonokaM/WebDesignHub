@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 export default function Home() {
   const [postList, setPostList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [loadingScreenClass, setLoadingScreenClass] = useState(styles.loadingScreen);
+  const [displayNone, setDisplayNone] = useState(false);
 
   useEffect(() => {
     const getPostsAndComments = async () => {
@@ -28,16 +28,15 @@ export default function Home() {
     getPostsAndComments();
   }, []);
 
-
   useEffect(() => {
     if (!loading) {
-      setLoadingScreenClass(styles.loadingScreenFadeOut);
+      setTimeout(() => setDisplayNone(true), 1000);
     }
   }, [loading]);
 
   return (
     <>
-      <div className={loadingScreenClass}>
+      <div className={loading ? styles.loadingScreen : styles.loadingScreen + ' ' + styles.hidden} style={displayNone ? {display: 'none'} : {}}>
         <img src="/logo-character.png" className={styles.floatingImage} alt="loading" />
       </div>
       {!loading && (
