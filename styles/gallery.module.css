@@ -1,6 +1,36 @@
+.floatingImage {
+  animation: floating 1.9s ease-in-out infinite;
+  max-width: 150px;
+}
+
+@keyframes floating {
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -20px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+.loadingScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+  z-index: 3;
+  transition: opacity 1s ease-in-out;
+  opacity: 1;
+}
+
+.hidden {
+  opacity: 0;
+}
+
 .mainContentContainer {
   width: 70%;
-  margin: auto; /* This will center the container */
+  margin: auto;
   display: flex;
   flex-direction: column;
   margin-bottom: 150px;
