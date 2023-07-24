@@ -1,10 +1,12 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import { auth } from '../lib/firebase';
 import commonStyles from '../styles/common.module.css';
 import styles from '../styles/login.module.css';
 import Link from "next/link"
+
+import { AuthFlagContext } from "@/components/providers/AuthFlagProvider";
 
 
 export default function Login() {
@@ -12,6 +14,9 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
+
+  const contextValue = useContext(AuthFlagContext);
+  console.log(contextValue);
 
   const doLogin = (e) => {
     e.preventDefault();

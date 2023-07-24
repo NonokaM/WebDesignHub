@@ -9,7 +9,6 @@ export function Comment({ comment }) {
     return (
         <div className={styles.commentContainer}>
             <h3 className={styles.huki}>{comment.text}</h3>
-            {/* <h5>{comment.userId}</h5> */}
         </div>
     );
 }
@@ -53,9 +52,18 @@ export function CommentForm({ postId, comments, setComments }) {
     }
 
     return (
-        <form onSubmit={handleSubmit} className={styles.inputContainer}>
-            <input type="text" className={styles.hukiInput} value={text} onChange={handleTextChange} placeholder="コメントを入力" />
-            <button className={styles.plusbtn} type="submit">＋</button>
-        </form>
-    );
+        <>
+        {/* {!isAuth ? (
+            <form onSubmit={handleSubmit} className={styles.inputContainer}>
+                <input type="text" className={styles.hukiInput} value={text} onChange={handleTextChange} placeholder="コメントを入力" />
+                <button className={styles.plusbtn} type="submit">＋</button>
+            </form>
+        ) : (
+            <form onSubmit={handleSubmit} className={styles.inputContainer}>
+                <input type="text" className={styles.hukiInput} value={text} onChange={handleTextChange} placeholder="ログインしてコメントしよう！" />
+                <button className={styles.plusbtn} type="submit">＋</button>
+            </form>
+        )} */}
+        </>
+    )
 }

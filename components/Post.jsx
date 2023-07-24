@@ -77,7 +77,10 @@ export default function Post({ url, screenshotName, comment, userId, postId, com
                 {commentsState.map((comment, index) => (
                     <Comment key={index} comment={comment} />
                 ))}
-                <CommentForm postId={postId} comments={commentsState} setComments={setCommentsState} />
+                <CommentForm
+                postId={postId}
+                comments={commentsState}
+                setComments={setCommentsState} />
             </div>
         </div>
     );
