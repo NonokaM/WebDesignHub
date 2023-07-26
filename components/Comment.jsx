@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { db } from '../lib/firebase';
-
+import { AuthFlagContext } from "./providers/AuthFlagProvider"
 import styles from '../styles/post.module.css'
 
 export function Comment({ comment }) {
@@ -15,6 +15,7 @@ export function Comment({ comment }) {
 
 export function CommentForm({ postId, comments, setComments }) {
     const [text, setText] = useState('');
+    const { isAuth, setIsAuth } = useContext(AuthFlagContext);
     const auth = getAuth();
     const currentUser = auth.currentUser;
 
@@ -53,7 +54,7 @@ export function CommentForm({ postId, comments, setComments }) {
 
     return (
         <>
-        {/* {!isAuth ? (
+        {!isAuth ? (
             <form onSubmit={handleSubmit} className={styles.inputContainer}>
                 <input type="text" className={styles.hukiInput} value={text} onChange={handleTextChange} placeholder="コメントを入力" />
                 <button className={styles.plusbtn} type="submit">＋</button>
@@ -63,7 +64,7 @@ export function CommentForm({ postId, comments, setComments }) {
                 <input type="text" className={styles.hukiInput} value={text} onChange={handleTextChange} placeholder="ログインしてコメントしよう！" />
                 <button className={styles.plusbtn} type="submit">＋</button>
             </form>
-        )} */}
+        )}
         </>
     )
 }

@@ -1,36 +1,13 @@
 import Header from 'components/Header'
 import Footer from 'components/Footer'
-import { useEffect, useState } from 'react'
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-// import { AuthFlagContext, AuthFlagProvider } from './providers/AuthFlagProvider';
 import { AuthFlagProvider } from './providers/AuthFlagProvider';
 
 export default function Layout({ children }) {
-    // const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth") === 'true');
-    const [isAuth, setIsAuth] = useState(false);
-
-    useEffect(() => {
-        const auth = getAuth();
-        const unsubscribe = onAuthStateChanged(auth, user => {
-            setIsAuth(!!user);
-        });
-        return () => unsubscribe();
-    }, []);
-
-
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            setIsAuth(localStorage.getItem("isAuth") === 'true');
-        }
-    }, []);
-
     return (
         <AuthFlagProvider>
-        {/* <> */}
-            <Header isAuth={isAuth} setIsAuth={setIsAuth}/>
+            <Header />
             <main>{ children }</main>
             <Footer />
         </AuthFlagProvider>
-        // </>
     )
 }
