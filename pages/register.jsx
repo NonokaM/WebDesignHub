@@ -1,23 +1,14 @@
-import { createUserWithEmailAndPassword } from "firebase/auth"
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useEffect, useState } from 'react';
 import { auth } from '../lib/firebase';
-import commonStyles from '../styles/common.module.css'
-import styles from '../styles/register.module.css'
-
+import commonStyles from '../styles/common.module.css';
+import styles from '../styles/register.module.css';
 
 export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
-  useEffect(() => {
-    console.log(`Email changed: ${email}`);
-  }, [email]);
-
-  useEffect(() => {
-    console.log(`Password changed: ${password}`);
-  }, [password]);
 
   const doRegister = () => {
     if (!email || !password || !passwordConfirm) {
@@ -32,16 +23,12 @@ export default function Register() {
 
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      const user = userCredential.user;
       alert( '登録完了！' );
-      console.log( user );
     })
     .catch((error) => {
-      console.log(error);
       setErrorMessage('エラーが発生しました。もう一度お試しください。');
     });
   }
-
 
   return (
     <div className={styles.registerContainer}>
