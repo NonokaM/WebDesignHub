@@ -1,15 +1,16 @@
 import Link from "next/link"
-import React from "react"
+import React, { useContext } from "react"
 import { getAuth, signOut } from 'firebase/auth'
-import { auth } from '../lib/firebase'
 import { useRouter } from 'next/router'
-
+import { AuthFlagContext } from "./providers/AuthFlagProvider"
 import styles from '../styles/header.module.css'
 
 
-export default function Header({ isAuth, setIsAuth }) {
+export default function Header() {
 
     const router = useRouter();
+    const { isAuth, setIsAuth } = useContext(AuthFlagContext);
+    const auth = getAuth();
 
     const handleLogout = () => {
         signOut(auth).then(() => {
