@@ -5,8 +5,12 @@ import styles from '../styles/post.module.css';
 import { collection, query, where, getDocs, addDoc, deleteDoc } from "firebase/firestore";
 import { db } from '../lib/firebase';
 import { Comment, CommentForm } from '../components/Comment';
+import { auth } from '../lib/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
-export default function Post({ url, screenshotName, comment, userId, postId, comments }) {
+
+export default function Post({ url, screenshotName, comment, postId, comments }) {
+    const [userId, setUserId] = useState(null);
     const [imageURL, setImageURL] = useState(null);
     const [liked, setLiked] = useState(false);
     const [commentsState, setCommentsState] = useState(comments || []);
@@ -15,20 +19,31 @@ export default function Post({ url, screenshotName, comment, userId, postId, com
 
 
     useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUserId(user.uid);
+            }
+        });
+
+
         getDownloadURL(storageRef)
-            .then((url) => {
-                setImageURL(url);
-            })
-            .catch((error) => {
-                switch (error.code) {
-                    case 'storage/object-not-found':
-                        break;
-                    case 'storage/unauthorized':
-                        break;
-                    case 'storage/canceled':
-                        break;
-                }
-            });
+        .then((url) => {
+            setImageURL(url);
+        })
+        .catch((error) => {
+            switch (error.code) {
+                case 'storage/object-not-found':
+                // Handle this error
+                    break;
+                case 'storage/unauthorized':
+                // Handle this error
+                    break;
+                case 'storage/canceled':
+                // Handle this error
+                    break;
+            }
+        });
+
 
         const fetchLikes = async () => {
             const q = query(
@@ -40,8 +55,12 @@ export default function Post({ url, screenshotName, comment, userId, postId, com
             setLiked(!querySnapshot.empty);
         };
 
-        fetchLikes();
-    }, []);
+        if (userId) fetchLikes();
+
+        return () => {
+            unsubscribe();
+        };
+    }, [userId]);
 
     const toggleLike = async () => {
         if (liked) {
@@ -62,6 +81,7 @@ export default function Post({ url, screenshotName, comment, userId, postId, com
         }
         setLiked(!liked);
     };
+
 
     return (
         <div className={styles.postContainer}>
