@@ -45,6 +45,7 @@ export default function Likes() {
             const postId = docSnapshot.data().postId;
             const postDoc = await getDoc(doc(db, "posts", postId));
             const postData = postDoc.data();
+            postData.id = postDoc.id;
             posts.push(postData);
         }
         setLikedPosts(posts);
