@@ -5,12 +5,8 @@ import styles from '../styles/post.module.css';
 import { collection, query, where, getDocs, addDoc, deleteDoc } from "firebase/firestore";
 import { db } from '../lib/firebase';
 import { Comment, CommentForm } from '../components/Comment';
-import { auth } from '../lib/firebase';
-import { onAuthStateChanged } from 'firebase/auth';
 
-
-export default function Post({ url, screenshotName, comment, postId, comments }) {
-    const [userId, setUserId] = useState(null);
+export default function Post({ url, screenshotName, comment, userId, postId, comments }) {
     const [imageURL, setImageURL] = useState(null);
     const [liked, setLiked] = useState(false);
     const [commentsState, setCommentsState] = useState(comments || []);
@@ -19,50 +15,39 @@ export default function Post({ url, screenshotName, comment, postId, comments })
 
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setUserId(user.uid);
-            }
-        });
-
-
         getDownloadURL(storageRef)
-        .then((url) => {
-            setImageURL(url);
-        })
-        .catch((error) => {
-            switch (error.code) {
-                case 'storage/object-not-found':
-                // Handle this error
-                    break;
-                case 'storage/unauthorized':
-                // Handle this error
-                    break;
-                case 'storage/canceled':
-                // Handle this error
-                    break;
-            }
-        });
+            .then((url) => {
+                setImageURL(url);
+            })
+            .catch((error) => {
+                switch (error.code) {
+                    case 'storage/object-not-found':
+                        break;
+                    case 'storage/unauthorized':
+                        break;
+                    case 'storage/canceled':
+                        break;
+                }
+            });
 
+        if (userId && postId) {
+            const fetchLikes = async () => {
+                const q = query(
+                    collection(db, "likes"),
+                    where("postId", "==", postId),
+                    where("userId", "==", userId)
+                );
+                const querySnapshot = await getDocs(q);
+                setLiked(!querySnapshot.empty);
+            };
 
-        const fetchLikes = async () => {
-            const q = query(
-                collection(db, "likes"),
-                where("postId", "==", postId),
-                where("userId", "==", userId)
-            );
-            const querySnapshot = await getDocs(q);
-            setLiked(!querySnapshot.empty);
-        };
-
-        if (userId) fetchLikes();
-
-        return () => {
-            unsubscribe();
-        };
-    }, [userId]);
+            fetchLikes();
+        }
+    }, [userId, postId]);
 
     const toggleLike = async () => {
+        if (!userId || !postId) return;
+
         if (liked) {
             const q = query(
                 collection(db, "likes"),

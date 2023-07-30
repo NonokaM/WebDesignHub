@@ -1,5 +1,5 @@
 import { collection, doc, getDocs, query, where } from "firebase/firestore";
-import { auth, db } from '../lib/firebase';
+import { db } from '../lib/firebase';
 import styles from '../styles/gallery.module.css';
 import Post from '../components/Post';
 import React, { useEffect, useState } from 'react';

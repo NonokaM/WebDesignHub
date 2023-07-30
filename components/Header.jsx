@@ -3,6 +3,7 @@ import React, { useContext } from "react"
 import { getAuth, signOut } from 'firebase/auth'
 import { useRouter } from 'next/router'
 import { AuthFlagContext } from "./providers/AuthFlagProvider"
+import '../lib/firebase'
 import styles from '../styles/header.module.css'
 
 
@@ -42,7 +43,7 @@ export default function Header() {
                         </div>
                         <div className={styles.dropdownContent}>
                             <Link href="/user"></Link>
-                            {/* <Link href="/likes">いいねした投稿</Link> */}
+                            <Link href="/likes">いいねした投稿</Link>
                             <button onClick={handleLogout}>ログアウト</button>
                         </div>
                     </div>
