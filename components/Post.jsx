@@ -3,21 +3,21 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import React, { useEffect, useState } from 'react';
 import styles from '../styles/post.module.css';
 import { collection, query, where, getDocs, addDoc, deleteDoc } from "firebase/firestore";
-import { db, auth } from '../lib/firebase'; // Ensure that auth is imported
+import { db, auth } from '../lib/firebase';
 import { Comment, CommentForm } from '../components/Comment';
-import { onAuthStateChanged } from 'firebase/auth'; // Ensure that onAuthStateChanged is imported
+import { onAuthStateChanged } from 'firebase/auth';
 
 export default function Post({ url, screenshotName, comment, userId, postId, comments }) {
     const [imageURL, setImageURL] = useState(null);
     const [liked, setLiked] = useState(false);
     const [commentsState, setCommentsState] = useState(comments || []);
-    const [currentUserId, setCurrentUserId] = useState(null); // Add this line
+    const [currentUserId, setCurrentUserId] = useState(null);
     const storage = getStorage();
     let storageRef = ref(storage, `screenshots/${screenshotName}.png`);
 
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => { // Subscribe to onAuthStateChanged
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setCurrentUserId(user.uid);
             }
@@ -38,12 +38,12 @@ export default function Post({ url, screenshotName, comment, userId, postId, com
                 }
             });
 
-        if (currentUserId && postId) { // Use currentUserId instead of userId
+        if (currentUserId && postId) {
             const fetchLikes = async () => {
                 const q = query(
                     collection(db, "likes"),
                     where("postId", "==", postId),
-                    where("userId", "==", currentUserId) // Use currentUserId instead of userId
+                    where("userId", "==", currentUserId)
                 );
                 const querySnapshot = await getDocs(q);
                 setLiked(!querySnapshot.empty);
@@ -52,20 +52,19 @@ export default function Post({ url, screenshotName, comment, userId, postId, com
             fetchLikes();
         }
 
-        // Unsubscribe on cleanup
         return () => {
             unsubscribe();
         };
-    }, [currentUserId, postId]); // Use currentUserId instead of userId
+    }, [currentUserId, postId]);
 
     const toggleLike = async () => {
-        if (!currentUserId || !postId) return; // Use currentUserId instead of userId
+        if (!currentUserId || !postId) return;
 
         if (liked) {
             const q = query(
                 collection(db, "likes"),
                 where("postId", "==", postId),
-                where("userId", "==", currentUserId) // Use currentUserId instead of userId
+                where("userId", "==", currentUserId)
             );
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach(async (doc) => {
@@ -74,7 +73,7 @@ export default function Post({ url, screenshotName, comment, userId, postId, com
         } else {
             await addDoc(collection(db, "likes"), {
                 postId,
-                userId: currentUserId // Use currentUserId instead of userId
+                userId: currentUserId 
             });
         }
         setLiked(!liked);
