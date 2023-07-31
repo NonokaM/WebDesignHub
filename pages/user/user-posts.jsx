@@ -1,22 +1,22 @@
 import { useState, useEffect } from 'react';
-import { auth } from '../lib/firebase';
+import { auth } from '../../lib/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
-import { db } from '../lib/firebase';
+import { db } from '../../lib/firebase';
 import { useRouter } from 'next/router';
-import Post from '../components/Post';
+import Post from '../../components/Post';
 
-export default function Likes() {
+
+export default function UserPosts() {
     const [currentUserId, setCurrentUserId] = useState(null);
-    const [likedPosts, setLikedPosts] = useState([]);
+    const [userPosts, setUserPosts] = useState([]);
     const router = useRouter();
-
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, user => {
             if (user) {
                 setCurrentUserId(user.uid);
-                fetchLikedPosts(user.uid);
+                fetchUserPosts(user.uid);
             } else {
                 setCurrentUserId(null);
                 router.push('/');
@@ -29,35 +29,33 @@ export default function Likes() {
 
     useEffect(() => {
         if (currentUserId) {
-            fetchLikedPosts(currentUserId);
+            fetchUserPosts(currentUserId);
         }
     }, [currentUserId]);
 
 
-    const fetchLikedPosts = async (userId) => {
+    const fetchUserPosts = async (userId) => {
         if (!userId) {
             return;
         }
-        const q = query(collection(db, "likes"), where("userId", "==", userId));
+        const q = query(collection(db, "posts"), where("userId", "==", userId));
         const querySnapshot = await getDocs(q);
         const posts = [];
         for (const docSnapshot of querySnapshot.docs) {
-            const postId = docSnapshot.data().postId;
-            const postDoc = await getDoc(doc(db, "posts", postId));
-            const postData = postDoc.data();
-            postData.id = postDoc.id;
+            const postData = docSnapshot.data();
+            postData.id = docSnapshot.id;
             posts.push(postData);
         }
-        setLikedPosts(posts);
+        setUserPosts(posts);
     };
 
 
-    return (
+    return(
         <div>
-            {likedPosts.map((post, index) => {
+            {userPosts.map((post) => {
                 return (
                     <Post
-                        key={post.id || index}
+                        key={post.id}
                         postId={post.id}
                         url={post.url}
                         screenshotName={post.screenshotName}
@@ -68,5 +66,5 @@ export default function Likes() {
                 )
             })}
         </div>
-    );
+    )
 }
