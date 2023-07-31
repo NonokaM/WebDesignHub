@@ -43,7 +43,8 @@ export default function Header() {
                         </div>
                         <div className={styles.dropdownContent}>
                             <Link href="/user"></Link>
-                            <Link href="/likes">いいねした投稿</Link>
+                            <Link href="/user/liked-posts">いいねした投稿</Link><br />
+                            <Link href="/user/user-posts">あなたの投稿</Link>
                             <button onClick={handleLogout}>ログアウト</button>
                         </div>
                     </div>
