@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { auth } from '../lib/firebase';
+import { auth } from '../../lib/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
-import { db } from '../lib/firebase';
+import { db } from '../../lib/firebase';
 import { useRouter } from 'next/router';
-import Post from '../components/Post';
+import Post from '../../components/Post';
 
-export default function Likes() {
+export default function LikedPosts() {
     const [currentUserId, setCurrentUserId] = useState(null);
     const [likedPosts, setLikedPosts] = useState([]);
     const router = useRouter();
