@@ -73,7 +73,7 @@ export default function Post({ url, screenshotName, comment, userId, postId, com
         } else {
             await addDoc(collection(db, "likes"), {
                 postId,
-                userId: currentUserId 
+                userId: currentUserId
             });
         }
         setLiked(!liked);

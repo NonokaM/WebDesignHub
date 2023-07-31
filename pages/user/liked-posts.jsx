@@ -54,10 +54,10 @@ export default function LikedPosts() {
 
     return (
         <div>
-            {likedPosts.map((post, index) => {
+            {likedPosts.map((post) => {
                 return (
                     <Post
-                        key={post.id || index}
+                        key={post.id}
                         postId={post.id}
                         url={post.url}
                         screenshotName={post.screenshotName}
