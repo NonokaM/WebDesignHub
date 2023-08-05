@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { auth } from '../lib/firebase';
 import commonStyles from '../styles/common.module.css';
 import styles from '../styles/register.module.css';
+import Router from 'next/router';
 
 export default function Register() {
   const [email, setEmail] = useState('');
@@ -23,13 +24,14 @@ export default function Register() {
 
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      alert( '登録完了！' );
+      Router.push('/');
     })
     .catch((error) => {
       if (error.code === 'auth/email-already-in-use') {
         setErrorMessage('このメールアドレスは既に登録されています。');
       } else {
         setErrorMessage('エラーが発生しました。もう一度お試しください。');
+        console.log(error);
       }
     });
   }
