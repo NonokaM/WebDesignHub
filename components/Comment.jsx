@@ -56,12 +56,12 @@ export function CommentForm({ postId, comments, setComments }) {
         <>
         {!isAuth ? (
             <form onSubmit={handleSubmit} className={styles.inputContainer}>
-                <input type="text" className={styles.hukiInput} value={text} onChange={handleTextChange} placeholder="コメントを入力" />
+                <input type="text" className={styles.hukiInput} value={text} onChange={handleTextChange} placeholder="ログインしてコメントしよう！" />
                 <button className={styles.plusbtn} type="submit">＋</button>
             </form>
         ) : (
             <form onSubmit={handleSubmit} className={styles.inputContainer}>
-                <input type="text" className={styles.hukiInput} value={text} onChange={handleTextChange} placeholder="ログインしてコメントしよう！" />
+                <input type="text" className={styles.hukiInput} value={text} onChange={handleTextChange} placeholder="コメントを入力" />
                 <button className={styles.plusbtn} type="submit">＋</button>
             </form>
         )}
