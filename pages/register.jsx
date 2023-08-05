@@ -26,7 +26,11 @@ export default function Register() {
       alert( '登録完了！' );
     })
     .catch((error) => {
-      setErrorMessage('エラーが発生しました。もう一度お試しください。');
+      if (error.code === 'auth/email-already-in-use') {
+        setErrorMessage('このメールアドレスは既に登録されています。');
+      } else {
+        setErrorMessage('エラーが発生しました。もう一度お試しください。');
+      }
     });
   }
 
@@ -46,14 +50,14 @@ export default function Register() {
             type="password"
             name="password"
             className={commonStyles.textInput}
-            placeholder="パスワード"
+            placeholder="パスワード（6文字以上）"
             onChange={(e) => setPassword(e.target.value)}
           />
           <input
             type="password"
             name="passwordConfirm"
             className={commonStyles.textInput}
-            placeholder="パスワード（確認用）"
+            placeholder="パスワード（再入力）"
             onChange={(e) => setPasswordConfirm(e.target.value)}
           />
           <button
